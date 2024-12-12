@@ -19,7 +19,6 @@ class CollectionsTestes {
 	}
 
 	@Test
-
 	void testeSortSucesso() {
 		List<Integer> lista = new ArrayList<Integer>();
 		lista.add(3);
@@ -28,8 +27,30 @@ class CollectionsTestes {
 		Collections.sort(lista);
 
 		assertEquals(1, lista.get(0));
-
 	}
+	
+	@Test
+	void testeCheckedListFalha() {
+		List<String> lista = new ArrayList<>();
+		List<String> checkedList = Collections.checkedList(lista, String.class);
+		List<String> listaSemTipo = checkedList;
+		listaSemTipo.add("123");
 
+		assertEquals("123", listaSemTipo.get(0));
+	}
+	
+	@Test
+	void testeBinarySearch() {
+		List<Integer> listaInteiros = List.of(1, 5, 8, 10, 12, 16, 19, 24, 26, 46, 84);
+		int item = 24;
+		Collections.binarySearch(listaInteiros, item);
+
+		assertEquals(7, Collections.binarySearch(listaInteiros, item));
+	}
+	
+	@Test
+	void teste() {
+		
+	}
 
 }
