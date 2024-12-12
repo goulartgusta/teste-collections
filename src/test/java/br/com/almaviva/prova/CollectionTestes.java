@@ -1,6 +1,8 @@
 package br.com.almaviva.prova;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,13 +19,13 @@ public class CollectionTestes {
 	@Test
 	void testaAddSucesso() {
 		Collection<String> collection = new ArrayList<>();
-		assertEquals(true, collection.add("D"));
+		assertTrue(collection.add("D"));
 	}
 
 	@Test
 	void testaAddAllSucesso() {
 		Collection<String> collection = new ArrayList<>();
-		assertEquals(true, collection.addAll(Arrays.asList("B", "C", "D")));
+		assertTrue(collection.addAll(Arrays.asList("B", "C", "D")));
 	}
 
 	@Test
@@ -32,25 +34,25 @@ public class CollectionTestes {
 		collection.add("B");
 		collection.add("C");
 		collection.clear();
-		assertEquals(true, collection.isEmpty());
+		assertTrue(collection.isEmpty());
 	}
 
 	@Test
 	void testaIsEmptySucesso() {
 		Collection<String> collection = new ArrayList<>();
-		assertEquals(true, collection.isEmpty());
+		assertTrue(collection.isEmpty());
 	}
 
 	@Test
 	void testaContainsAllSucesso() {
 		Collection<String> collection = List.of("B", "C", "D");
-		assertEquals(true, collection.containsAll(Arrays.asList("B", "C", "D")));
+		assertTrue(collection.containsAll(Arrays.asList("B", "C", "D")));
 	}
 
 	@Test
 	void testaContainsSucesso() {
 		Collection<String> collection = List.of("B", "C", "D");
-		assertEquals(true, collection.contains("B"));
+		assertTrue(collection.contains("B"));
 	}
 
 	@Test
@@ -58,7 +60,7 @@ public class CollectionTestes {
 		Collection<String> collection = new ArrayList<>();
 		collection.add("B");
 		collection.add("C");
-		assertEquals(true, collection.remove("B"));
+		assertTrue(collection.remove("B"));
 	}
 
 	@Test
@@ -73,15 +75,14 @@ public class CollectionTestes {
 		collection1.add("C");
 		Collection<String> collection2 = new ArrayList<>();
 		collection2.add("B");
-
-		assertEquals(false, collection1.hashCode() == collection2.hashCode());
+		assertFalse(collection1.hashCode() == collection2.hashCode());
 	}
 
 	@Test
 	void testaIratorTemProximo() {
 		Collection<String> collection = List.of("B", "C", "D");
 		Iterator<String> it = collection.iterator();
-		assertEquals(true, it.hasNext());
+		assertTrue(it.hasNext());
 	}
 
 	@Test
@@ -101,25 +102,29 @@ public class CollectionTestes {
 
 	@Test
 	void testaSpliratorSucesso() {
-		Collection<String> collection = List.of("B", "C", "D", "E");
-		Spliterator<String> arrayDividido1 = collection.spliterator();
-		assertEquals(2, arrayDividido1);
-	}
-	
-	@Test
-	void testaRetainAll() {
-		Collection<String> collection1 = List.of("A", "B", "D", "E");
-		Collection<String> collection2 = List.of("B", "C", "D", "E");
-		assertEquals(true, collection2.retainAll(collection1));
+	    Collection<String> collection = List.of("B", "C", "D", "E");
+	    Spliterator<String> arrayDividido1 = collection.spliterator();
+	    assertEquals(4, arrayDividido1.getExactSizeIfKnown());
 	}
 
 	@Test
 	void testaRemoveIfSucesso() {
-		Collection<Integer> collection = List.of(1, 2, 3, 4);
-		Predicate<Integer> filtro;
-		//collection.removeIf(num);
-		assertEquals(true, 3 );
+	    Collection<Integer> collection = new ArrayList<>(List.of(1, 2, 3, 4));
+	    Predicate<Integer> filtro = num -> num > 2;
+	    boolean resultado = collection.removeIf(filtro);
+	    assertTrue(resultado);
 	}
 	
-// stream, sparallelStream
+	
+	//testar melhor
+	@Test
+	void testaRetainAll() {
+		Collection<String> collection1 = List.of("A", "B", "D", "E");
+		Collection<String> collection2 = List.of("F", "G");
+		collection2.retainAll(collection1);
+		
+		assertEquals(List.of("F", "G"), collection1);
+	}
+	
+// stream, parallelStream
 }
