@@ -18,6 +18,18 @@ class CollectionsTestes {
 		assertEquals(3, lista.size());
 	}
 
+	@Test
+
+	void testeSortSucesso() {
+		List<Integer> lista = new ArrayList<Integer>();
+		lista.add(3);
+		lista.add(1);
+		lista.add(2);
+		Collections.sort(lista);
+
+		assertEquals(1, lista.get(0));
+
+	}
 
 
 }
