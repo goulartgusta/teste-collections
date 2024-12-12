@@ -8,123 +8,107 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Predicate;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CollectionTestes {
 
-	@Test
-	void testaAddSucesso() {
-		Collection<String> collection = new ArrayList<>();
-		assertTrue(collection.add("D"));
-	}
+    private Collection<String> collection;
 
-	@Test
-	void testaAddAllSucesso() {
-		Collection<String> collection = new ArrayList<>();
-		assertTrue(collection.addAll(Arrays.asList("B", "C", "D")));
-	}
+    @BeforeEach
+    void setUp() {
+        collection = new ArrayList<>(Arrays.asList("A", "B", "C"));
+    }
 
-	@Test
-	void testaClearSucesso() {
-		Collection<String> collection = new ArrayList<>();
-		collection.add("B");
-		collection.add("C");
-		collection.clear();
-		assertTrue(collection.isEmpty());
-	}
+    @Test
+    void testaAdd() {
+        assertTrue(collection.add("D"));
+    }
 
-	@Test
-	void testaIsEmptySucesso() {
-		Collection<String> collection = new ArrayList<>();
-		assertTrue(collection.isEmpty());
-	}
+    @Test
+    void testaAddAll() {
+        assertTrue(collection.addAll(Arrays.asList("D", "E")));
+    }
 
-	@Test
-	void testaContainsAllSucesso() {
-		Collection<String> collection = List.of("B", "C", "D");
-		assertTrue(collection.containsAll(Arrays.asList("B", "C", "D")));
-	}
+    @Test
+    void testaClear() {
+        collection.clear();
+        assertTrue(collection.isEmpty());
+    }
 
-	@Test
-	void testaContainsSucesso() {
-		Collection<String> collection = List.of("B", "C", "D");
-		assertTrue(collection.contains("B"));
-	}
+    @Test
+    void testaContains() {
+        assertTrue(collection.contains("A"));
+    }
 
-	@Test
-	void testaRemoveSucesso() {
-		Collection<String> collection = new ArrayList<>();
-		collection.add("B");
-		collection.add("C");
-		assertTrue(collection.remove("B"));
-	}
+    @Test
+    void testaContainsAll() {
+        assertTrue(collection.containsAll(Arrays.asList("A", "B")));
+    }
 
-	@Test
-	void testaSizeSucesso() {
-		Collection<String> collection = List.of("B", "C", "D");
-		assertEquals(3, collection.size());
-	}
+    @Test
+    void testaEquals() {
+        Collection<String> otherCollection = new ArrayList<>(Arrays.asList("A", "B", "C"));
+        assertEquals(collection, otherCollection);
+    }
 
-	@Test
-	void testaHashCodeFalso() {
-		Collection<String> collection1 = new ArrayList<>();
-		collection1.add("C");
-		Collection<String> collection2 = new ArrayList<>();
-		collection2.add("B");
-		assertFalse(collection1.hashCode() == collection2.hashCode());
-	}
+    @Test
+    void testaHashCode() {
+        Collection<String> otherCollection = new ArrayList<>(Arrays.asList("A", "B", "C"));
+        assertEquals(collection.hashCode(), otherCollection.hashCode());
+    }
 
-	@Test
-	void testaIratorTemProximo() {
-		Collection<String> collection = List.of("B", "C", "D");
-		Iterator<String> it = collection.iterator();
-		assertTrue(it.hasNext());
-	}
+    @Test
+    void testaIsEmpty() {
+        assertFalse(collection.isEmpty());
+    }
 
-	@Test
-	void testaToArraySucesso() {
-		Collection<String> collection = List.of("B", "C", "D");
-		String[] array = new String[3];
-		collection.toArray(array);
-		assertEquals(3, array.length);
-	}
+    @Test
+    void testaIterator() {
+        Iterator<String> iterator = collection.iterator();
+        assertTrue(iterator.hasNext());
+    }
 
-	@Test
-	void testaArrayToArraySucesso() {
-		Collection<String> collection = List.of("B", "C", "D");
-		String[] array = collection.toArray(new String[3]);
-		assertEquals(3, array.length);
-	}
+    @Test
+    void testaRemove() {
+        assertTrue(collection.remove("B"));
+    }
 
-	@Test
-	void testaSpliratorSucesso() {
-	    Collection<String> collection = List.of("B", "C", "D", "E");
-	    Spliterator<String> arrayDividido1 = collection.spliterator();
-	    assertEquals(4, arrayDividido1.getExactSizeIfKnown());
-	}
+    @Test
+    void testaRemoveAll() {
+        assertTrue(collection.removeAll(Arrays.asList("B", "C")));
+    }
 
-	@Test
-	void testaRemoveIfSucesso() {
-	    Collection<Integer> collection = new ArrayList<>(List.of(1, 2, 3, 4));
-	    Predicate<Integer> filtro = num -> num > 2;
-	    boolean resultado = collection.removeIf(filtro);
-	    assertTrue(resultado);
-	}
-	
-	
-	//testar melhor
-	@Test
-	void testaRetainAll() {
-		Collection<String> collection1 = List.of("A", "B", "D", "E");
-		Collection<String> collection2 = List.of("F", "G");
-		collection2.retainAll(collection1);
-		
-		assertEquals(List.of("F", "G"), collection1);
-	}
-	
-// stream, parallelStream
+    @Test
+    void testaToArray() {
+        Object[] array = collection.toArray();
+        assertEquals(3, array.length);
+    }
+
+    @Test
+    void testaArrayToArray() {
+        String[] array = collection.toArray(new String[0]);
+        assertEquals(3, array.length);
+    }
+
+    @Test
+    void testaSize() {
+        assertEquals(3, collection.size());
+    }
+
+    @Test
+    void testaSpliterator() {
+        Spliterator<String> spliterator = collection.spliterator();
+        assertEquals(3, spliterator.getExactSizeIfKnown());
+    }
+
+    @Test
+    void testaRemoveIf() {
+        Predicate<String> filter = s -> s.startsWith("B");
+        assertTrue(collection.removeIf(filter));
+        assertEquals(Arrays.asList("A", "C"), new ArrayList<>(collection));
+    }
 }
