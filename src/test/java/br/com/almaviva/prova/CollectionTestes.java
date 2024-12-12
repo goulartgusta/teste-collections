@@ -104,16 +104,22 @@ public class CollectionTestes {
 		Collection<String> collection = List.of("B", "C", "D", "E");
 		Spliterator<String> arrayDividido1 = collection.spliterator();
 		assertEquals(2, arrayDividido1);
-
+	}
+	
+	@Test
+	void testaRetainAll() {
+		Collection<String> collection1 = List.of("A", "B", "D", "E");
+		Collection<String> collection2 = List.of("B", "C", "D", "E");
+		assertEquals(true, collection2.retainAll(collection1));
 	}
 
 	@Test
 	void testaRemoveIfSucesso() {
 		Collection<Integer> collection = List.of(1, 2, 3, 4);
 		Predicate<Integer> filtro;
-		int num = 1;
-		collection.removeIf(num);
+		//collection.removeIf(num);
 		assertEquals(true, 3 );
 	}
-
+	
+// stream, sparallelStream
 }
