@@ -1,4 +1,4 @@
-package br.com.almaviva.prova;
+package br.com.almaviva.teste.collection.primeira_prova;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
