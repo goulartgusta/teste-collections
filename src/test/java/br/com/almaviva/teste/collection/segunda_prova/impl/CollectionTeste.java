@@ -13,84 +13,84 @@ import org.junit.jupiter.api.Test;
 
 import br.com.almaviva.teste.collection.segunda_prova.model.CollectionDados;
 
-public class CollectionTeste {
+public class CollectionTeste implements CollectionDados {
 
     private Collection<Character> collection;
 
     @BeforeEach
     void setUp() {
         collection = new ArrayList<>();
-        collection.add(CollectionDados.LETRA_A);
-        collection.add(CollectionDados.LETRA_B);
-        collection.add(CollectionDados.LETRA_C);
+        collection.add(LETRA_A);
+        collection.add(LETRA_B);
+        collection.add(LETRA_C);
     }
 
     @Test
     void testaAdd() {
-        assertTrue(collection.add(CollectionDados.LETRA_D));
+        assertTrue(collection.add(LETRA_D));
     }
 
     @Test
     void testaRemove() {
-        assertTrue(collection.remove(CollectionDados.LETRA_B));
-        assertFalse(collection.contains(CollectionDados.LETRA_B));
+        assertTrue(collection.remove(LETRA_B));
+        assertFalse(collection.contains(LETRA_B));
     }
 
     @Test
     void testaRemoveAll() {
-        collection.removeAll(List.of(CollectionDados.LETRA_A, CollectionDados.LETRA_B));
-        assertEquals(CollectionDados.TAMANHO_POS_REMOVEALL, collection.size());
+        collection.removeAll(List.of(LETRA_A, LETRA_B));
+        assertEquals(TAMANHO_POS_REMOVEALL, collection.size());
     }
 
     @Test
     void testaRemoveIf() {
-        collection.removeIf(c -> c.equals(CollectionDados.LETRA_B));
-        assertFalse(collection.contains(CollectionDados.LETRA_B));
-        assertEquals(CollectionDados.TAMANHO_POS_REMOVE, collection.size());
+        collection.removeIf(c -> c.equals(LETRA_B));
+        assertFalse(collection.contains(LETRA_B));
+        assertEquals(TAMANHO_POS_REMOVE, collection.size());
     }
 
     @Test
     void testaAddAll() {
-        assertTrue(collection.addAll(List.of(CollectionDados.LETRA_D, CollectionDados.LETRA_E)));
+        assertTrue(collection.addAll(List.of(LETRA_D, LETRA_E)));
     }
 
     @Test
     void testaClear() {
         collection.clear();
-        assertEquals(CollectionDados.TAMANHO_ZERO, collection.size());
+        assertEquals(TAMANHO_ZERO, collection.size());
     }
 
     @Test
     void testaContains() {
-        assertTrue(collection.contains(CollectionDados.LETRA_A));
+        assertTrue(collection.contains(LETRA_A));
     }
 
     @Test
     void testaContainsAll() {
-        assertTrue(collection.containsAll(List.of(CollectionDados.LETRA_A, CollectionDados.LETRA_B)));
+        assertTrue(collection.containsAll(List.of(LETRA_A, LETRA_B)));
     }
 
     @Test
     void testaEquals() {
         Collection<Character> copiaCollection = List.of(
-                CollectionDados.LETRA_A,
-                CollectionDados.LETRA_B,
-                CollectionDados.LETRA_C
+                LETRA_A,
+                LETRA_B,
+                LETRA_C
         );
         assertEquals(collection, copiaCollection);
     }
 
     @Test
     void testaSize() {
-        assertEquals(CollectionDados.TAMANHO_PADRAO, collection.size());
+        assertEquals(TAMANHO_PADRAO, collection.size());
     }
 
     @Test
     void testaHashCode() {
         Collection<Character> copiaCollection = List.of(
-                CollectionDados.LETRA_A,
-                CollectionDados.LETRA_B,
-                CollectionDados.LETRA_C
+                LETRA_A,
+                LETRA_B,
+                LETRA_C
         );
         assertEquals(collection.hashCode(), copiaCollection.hashCode());
     }
@@ -104,30 +104,30 @@ public class CollectionTeste {
 
     @Test
     void testaRetainAll() {
-        collection.retainAll(List.of(CollectionDados.LETRA_A));
-        assertEquals(CollectionDados.TAMANHO_POS_RETAIN, collection.size());
+        collection.retainAll(List.of(LETRA_A));
+        assertEquals(TAMANHO_POS_RETAIN, collection.size());
         assertNotNull(collection);
     }
 
     @Test
     void testaToArray() {
         Object[] array = collection.toArray();
-        assertEquals(CollectionDados.TAMANHO_PADRAO, array.length);
+        assertEquals(TAMANHO_PADRAO, array.length);
         assertArrayEquals(new Character[]{
-                CollectionDados.LETRA_A,
-                CollectionDados.LETRA_B,
-                CollectionDados.LETRA_C
+                LETRA_A,
+                LETRA_B,
+                LETRA_C
         }, array);
     }
 
     @Test
     void testaToArrayComTipo() {
         Character[] array = collection.toArray(new Character[0]);
-        assertEquals(CollectionDados.TAMANHO_PADRAO, array.length);
+        assertEquals(TAMANHO_PADRAO, array.length);
         assertArrayEquals(new Character[]{
-                CollectionDados.LETRA_A,
-                CollectionDados.LETRA_B,
-                CollectionDados.LETRA_C
+                LETRA_A,
+                LETRA_B,
+                LETRA_C
         }, array);
     }
 
@@ -135,7 +135,7 @@ public class CollectionTeste {
     void testaSpliterator() {
         Spliterator<Character> spliterator = collection.spliterator();
         assertNotNull(spliterator);
-        assertEquals(CollectionDados.TAMANHO_PADRAO, spliterator.getExactSizeIfKnown());
+        assertEquals(TAMANHO_PADRAO, spliterator.getExactSizeIfKnown());
     }
 
     @Test
@@ -143,7 +143,7 @@ public class CollectionTeste {
         Stream<Character> stream = collection.stream();
         assertNotNull(stream);
         long count = stream.count();
-        assertEquals(CollectionDados.TAMANHO_PADRAO, count);
+        assertEquals(TAMANHO_PADRAO, count);
     }
 
     @Test
@@ -151,6 +151,6 @@ public class CollectionTeste {
         Stream<Character> parallelStream = collection.parallelStream();
         assertNotNull(parallelStream);
         long count = parallelStream.count();
-        assertEquals(CollectionDados.TAMANHO_PADRAO, count);
+        assertEquals(TAMANHO_PADRAO, count);
     }
 }
