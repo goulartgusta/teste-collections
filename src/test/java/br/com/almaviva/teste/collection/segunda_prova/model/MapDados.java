@@ -1,19 +1,40 @@
 package br.com.almaviva.teste.collection.segunda_prova.model;
 
-public interface MapDados {
+public enum MapDados {
+
+    FRUTA_MACA("Maçã"),
+    FRUTA_BANANA("Banana"),
+    FRUTA_LARANJA("Laranja"),
+    FRUTA_MAMAO("Mamão"),
+    FRUTA_UVA("Uva"),
+
+    QTD_MACA(3),
+    QTD_BANANA(5),
+    QTD_LARANJA(2),
+    QTD_MAMAO(4),
+    QTD_ZERO(0),
+
+    TAMANHO_PADRAO(3),
+    TAMANHO_FINAL(4);
+
+	private String fruta;
+	private int quantidadeFrutas;
 	
-    static final String FRUTA_MACA = "Maçã";
-    static final String FRUTA_BANANA = "Banana";
-    static final String FRUTA_LARANJA = "Laranja";
-    static final String FRUTA_MAMAO = "Mamão";
-    static final String FRUTA_UVA = "Uva";
+	MapDados(String fruta) {
+		this.fruta = fruta;
+	}
+	
+	MapDados(int quantidadeFrutas){
+		this.quantidadeFrutas= quantidadeFrutas;
+	}
 
-    static final int QTD_MACA = 3;
-    static final int QTD_BANANA = 5;
-    static final int QTD_LARANJA = 2;
-    static final int QTD_MAMAO = 4;
-    static final int QTD_ZERO = 0;
+	public String getFruta() {
+		return fruta;
+	}
 
-    static final int TAMANHO_PADRAO = 3;
-    static final int TAMANHO_FINAL = 4;
+	public int getQuantidadeFrutas() {
+		return quantidadeFrutas;
+	}
+
+    
 }

@@ -7,40 +7,40 @@ import org.junit.jupiter.api.Test;
 
 import br.com.almaviva.teste.collection.segunda_prova.model.ListDados;
 
-public class ListTeste implements ListDados {
+public class ListTeste {
 
     private List<Character> lista;
 
     @BeforeEach
     void setUp() {
         lista = new ArrayList<>();
-        lista.add(LETRA_A);
-        lista.add(LETRA_B);
-        lista.add(LETRA_C);
+        lista.add(ListDados.LETRA_A.getLetra());
+        lista.add(ListDados.LETRA_B.getLetra());
+        lista.add(ListDados.LETRA_C.getLetra());
     }
 
     @Test
     void testaAdd() {
-        lista.add(LETRA_D);
-        assertEquals(TAMANHO_PADRAO + 1, lista.size());
+        lista.add(ListDados.LETRA_A.getLetra());
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho() + 1, lista.size());
     }
 
     @Test
     void testaAddPorIndice() {
-        lista.add(1, LETRA_D);
-        assertEquals(LETRA_D, lista.get(1));
-        assertEquals(TAMANHO_PADRAO + 1, lista.size());
+        lista.add(1, ListDados.LETRA_A.getLetra());
+        assertEquals(ListDados.LETRA_A.getLetra(), lista.get(1));
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho() + 1, lista.size());
     }
 
     @Test
     void testaSet() {
-        lista.set(1, LETRA_D);
-        assertEquals(LETRA_D, lista.get(1));
+        lista.set(1, ListDados.LETRA_A.getLetra());
+        assertEquals(ListDados.LETRA_A.getLetra(), lista.get(1));
     }
 
     @Test
     void testaSize() {
-        assertEquals(TAMANHO_PADRAO, lista.size());
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho(), lista.size());
     }
 
     @Test
@@ -51,49 +51,49 @@ public class ListTeste implements ListDados {
 
     @Test
     void testaContains() {
-        assertTrue(lista.contains(LETRA_B));
+        assertTrue(lista.contains(ListDados.LETRA_B.getLetra()));
     }
 
     @Test
     void testaContainsAll() {
-        assertTrue(lista.containsAll(List.of(LETRA_A, LETRA_B)));
+        assertTrue(lista.containsAll(List.of(ListDados.LETRA_A.getLetra(), ListDados.LETRA_B.getLetra())));
     }
 
     @Test
     void testaRemovePorIndice() {
         lista.remove(1);
-        assertEquals(TAMANHO_PADRAO - 1, lista.size());
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho() - 1, lista.size());
     }
 
     @Test
     void testaRemovePorObjeto() {
-        lista.remove(Character.valueOf(LETRA_B));
-        assertFalse(lista.contains(LETRA_B));
-        assertEquals(TAMANHO_PADRAO - 1, lista.size());
+        lista.remove(Character.valueOf(ListDados.LETRA_B.getLetra()));
+        assertFalse(lista.contains(ListDados.LETRA_B.getLetra()));
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho() - 1, lista.size());
     }
 
     @Test
     void testaRemoveAll() {
-        lista.removeAll(List.of(LETRA_A, LETRA_B));
+        lista.removeAll(List.of(ListDados.LETRA_A.getLetra(), ListDados.LETRA_B.getLetra()));
         assertEquals(1, lista.size());
     }
 
     @Test
     void testaRetainAll() {
-        lista.retainAll(List.of(LETRA_B));
+        lista.retainAll(List.of(ListDados.LETRA_B.getLetra()));
         assertEquals(1, lista.size());
-        assertEquals(LETRA_B, lista.get(0));
+        assertEquals(ListDados.LETRA_B.getLetra(), lista.get(0));
     }
 
     @Test
     void testaIndexOf() {
-        assertEquals(1, lista.indexOf(LETRA_B));
+        assertEquals(1, lista.indexOf(ListDados.LETRA_B.getLetra()));
     }
 
     @Test
     void testaLastIndexOf() {
-        lista.add(LETRA_B);
-        assertEquals(3, lista.lastIndexOf(LETRA_B));
+        lista.add(ListDados.LETRA_B.getLetra());
+        assertEquals(3, lista.lastIndexOf(ListDados.LETRA_B.getLetra()));
     }
 
     @Test
@@ -106,69 +106,69 @@ public class ListTeste implements ListDados {
     void testaIterator() {
         Iterator<Character> iterator = lista.iterator();
         assertTrue(iterator.hasNext());
-        assertEquals(LETRA_A, iterator.next());
+        assertEquals(ListDados.LETRA_A.getLetra(), iterator.next());
     }
 
     @Test
     void testaListIterator() {
         ListIterator<Character> listIterator = lista.listIterator();
         assertTrue(listIterator.hasNext());
-        assertEquals(LETRA_A, listIterator.next());
+        assertEquals(ListDados.LETRA_A.getLetra(), listIterator.next());
     }
 
     @Test
     void testaListIteratorComIndice() {
         ListIterator<Character> listIterator = lista.listIterator(1);
-        assertEquals(LETRA_B, listIterator.next());
+        assertEquals(ListDados.LETRA_B.getLetra(), listIterator.next());
     }
 
     @Test
     void testaReplaceAll() {
         lista.replaceAll(c -> (char) (c + 1));
-        assertEquals((char) (LETRA_A + 1), lista.get(0));
+        assertEquals((char) (ListDados.LETRA_A.getLetra() + 1), lista.get(0));
     }
 
     @Test
     void testaSort() {
         lista.sort(Comparator.reverseOrder());
-        assertEquals(LETRA_C, lista.get(0));
+        assertEquals(ListDados.LETRA_C.getLetra(), lista.get(0));
     }
 
     @Test
     void testaSubList() {
         List<Character> subLista = lista.subList(0, 2);
         assertEquals(2, subLista.size());
-        assertEquals(LETRA_A, subLista.get(0));
+        assertEquals(ListDados.LETRA_A.getLetra(), subLista.get(0));
     }
 
     @Test
     void testaSpliterator() {
         Spliterator<Character> spliterator = lista.spliterator();
         assertNotNull(spliterator);
-        assertEquals(TAMANHO_PADRAO, spliterator.getExactSizeIfKnown());
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho(), spliterator.getExactSizeIfKnown());
     }
 
     @Test
     void testaToArray() {
         Object[] array = lista.toArray();
-        assertEquals(TAMANHO_PADRAO, array.length);
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho(), array.length);
     }
 
     @Test
     void testaToArrayComTipo() {
         Character[] array = lista.toArray(new Character[0]);
-        assertEquals(TAMANHO_PADRAO, array.length);
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho(), array.length);
     }
 
     @Test
     void testaEquals() {
-        List<Character> outraLista = List.of(LETRA_A, LETRA_B, LETRA_C);
+        List<Character> outraLista = List.of(ListDados.LETRA_A.getLetra(), ListDados.LETRA_B.getLetra(), ListDados.LETRA_C.getLetra());
         assertEquals(lista, outraLista);
     }
 
     @Test
     void testaHashCode() {
-        List<Character> outraLista = List.of(LETRA_A, LETRA_B, LETRA_C);
+        List<Character> outraLista = List.of(ListDados.LETRA_A.getLetra(), ListDados.LETRA_B.getLetra(), ListDados.LETRA_C.getLetra());
         assertEquals(lista.hashCode(), outraLista.hashCode());
     }
 
@@ -179,14 +179,14 @@ public class ListTeste implements ListDados {
 
     @Test
     void testaAddAll() {
-        assertTrue(lista.addAll(List.of(LETRA_D, LETRA_E)));
-        assertEquals(TAMANHO_PADRAO + 2, lista.size());
+        assertTrue(lista.addAll(List.of(ListDados.LETRA_A.getLetra(), ListDados.LETRA_E.getLetra())));
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho() + 2, lista.size());
     }
 
     @Test
     void testaAddAllPorIndice() {
-        assertTrue(lista.addAll(1, List.of(LETRA_D, LETRA_E)));
-        assertEquals(LETRA_D, lista.get(1));
-        assertEquals(TAMANHO_PADRAO + 2, lista.size());
+        assertTrue(lista.addAll(1, List.of(ListDados.LETRA_A.getLetra(), ListDados.LETRA_E.getLetra())));
+        assertEquals(ListDados.LETRA_A.getLetra(), lista.get(1));
+        assertEquals(ListDados.TAMANHO_PADRAO.getTamanho() + 2, lista.size());
     }
 }

@@ -1,13 +1,27 @@
 package br.com.almaviva.teste.collection.segunda_prova.model;
 
-public interface ListDados {
+public enum ListDados {
+	LETRA_A('A'), LETRA_B('B'), LETRA_C('C'), LETRA_D('D'), LETRA_E('E'),
 
-    static final char LETRA_A = 65;
-    static final char LETRA_B = 66;
-    static final char LETRA_C = 67;
-    static final char LETRA_D = 68;
-    static final char LETRA_E = 69;
+	TAMANHO_PADRAO(3), TAMANHO_ZERO(0), TAMANHO_POS_REMOVE(2), TAMANHO_POS_REMOVEALL(1), TAMANHO_POS_RETAIN(1);
 
-    static final int TAMANHO_PADRAO = 3;
-    static final int TAMANHO_ZERO = 0;
+	private char letra;
+	private int tamanho;
+
+	ListDados(char letra) {
+		this.letra = letra;
+	}
+
+	ListDados(int tamanho) {
+		this.tamanho = tamanho;
+	}
+
+	public char getLetra() {
+		return letra;
+	}
+
+	public int getTamanho() {
+		return tamanho;
+	}
+	
 }
