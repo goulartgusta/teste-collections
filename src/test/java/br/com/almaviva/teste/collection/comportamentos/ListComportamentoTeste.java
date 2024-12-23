@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -73,5 +76,58 @@ public class ListComportamentoTeste {
 		assertFalse(list.contains(ListDados.LETRA_B.getLetra()));
 	}
 
+	@ParameterizedTest
+	@MethodSource("utilizarListas")
+	void deveriaAdicionarElementosConcorretemente(List<Character> list) throws InterruptedException {
+		ExecutorService executor = Executors.newFixedThreadPool(10);
 
+		for (int i = 0; i < 100; i++) {
+			final char letra = (char) ('A' + i % 26); 
+			executor.execute(() -> list.add(letra));
+		}
+
+		executor.shutdown();
+		executor.awaitTermination(50, TimeUnit.SECONDS);
+
+		assertEquals(100, list.size());
+	}
+
+	@ParameterizedTest
+	@MethodSource("utilizarListas")
+	void deveriaRemoverElementosConcorretemente(List<Character> list) throws InterruptedException {
+	    for (int i = 0; i < 100; i++) {
+	        list.add((char) ('A' + i % 26));
+	    }
+
+	    if (list instanceof CopyOnWriteArrayList) {
+	        ExecutorService executor = Executors.newFixedThreadPool(10);
+
+	        for (int i = 0; i < 100; i++) {
+	            final char letra = (char) ('A' + i % 26);
+	            executor.execute(() -> list.remove(Character.valueOf(letra)));
+	        }
+
+	        executor.shutdown();
+	        if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+	            throw new IllegalStateException("Threads não concluídas a tempo.");
+	        }
+
+	        assertEquals(0, list.size());
+	    }
+	}
+
+	@ParameterizedTest
+	@MethodSource("utilizarListas")
+	void deveriaLerElementosConcorretemente(List<Character> list) throws InterruptedException {
+		for (int i = 0; i < 100; i++) {
+			list.add((char) ('A' + i % 26));
+		}
+
+		ExecutorService executor = Executors.newFixedThreadPool(10);
+
+		executor.shutdown();
+		executor.awaitTermination(10, TimeUnit.SECONDS);
+
+		assertEquals(100, list.size());
+	}
 }
