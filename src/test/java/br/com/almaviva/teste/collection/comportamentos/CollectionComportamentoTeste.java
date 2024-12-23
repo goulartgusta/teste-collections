@@ -172,4 +172,57 @@ public class CollectionComportamentoTeste {
 		assertEquals(true, collection.equals(collection));
 	}
 
+	static Stream<Collection<Character>> utilizarColecoesThreadSafe() {
+		return Stream.of(new ArrayList<>(), new LinkedList<>(), new HashSet<>(), new ConcurrentSkipListSet<>());
+	}
+
+	@ParameterizedTest
+	@MethodSource("utilizarColecoesThreadSafe")
+	void deveriaRemoverElementosConcorretemente(Collection<Character> collection) throws InterruptedException {
+		for (int i = 0; i < 30; i++) {
+			collection.add((char) ('A' + i % 26));
+		}
+
+		ExecutorService executor = Executors.newFixedThreadPool(10);
+
+		for (int i = 0; i < 30; i++) {
+			char letra = (char) ('A' + i % 26);
+			executor.execute(() -> {
+				collection.remove(letra);
+			});
+		}
+
+		executor.shutdown();
+		executor.awaitTermination(10, TimeUnit.SECONDS);
+
+		assertEquals(0, collection.size());
+	}
+
+	@ParameterizedTest
+	@MethodSource("utilizarColecoesThreadSafe")
+	void deveriaLerElementosConcorretemente(Collection<Character> collection) throws InterruptedException {
+		for (int i = 0; i < 50; i++) {
+			collection.add((char) ('A' + i % 26));
+		}
+
+		ExecutorService executor = Executors.newFixedThreadPool(10);
+
+		for (int i = 0; i < 50; i++) {
+			executor.execute(() -> {
+				for (Character item : collection) {
+					assertTrue(item >= 'A' && item <= 'Z');
+				}
+			});
+		}
+
+		executor.shutdown();
+		executor.awaitTermination(10, TimeUnit.SECONDS);
+
+		if (collection instanceof Set) {
+			assertTrue(collection.size() <= 26);
+		} else {
+			assertEquals(50, collection.size());
+		}
+	}
+
 }
